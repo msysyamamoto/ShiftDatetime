@@ -18,9 +18,9 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
         $shiftdate = ShiftDatetime::create(); 
         $date = new Datetime(); 
 
-        $diff = $shiftdate->getTimestamp() - $date->getTimestamp();
-
-        $this->assertTrue($diff == $offset || $diff == ($offset + 1), "diff=[{$diff}]");
+        $diff     = $shiftdate->getTimestamp() - $date->getTimestamp();
+        $abs_diff = abs($diff - $offset);
+        $this->assertTrue($abs_diff <= 1);
     } 
 
     public function providerTestOffset()
