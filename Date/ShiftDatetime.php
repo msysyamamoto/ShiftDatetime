@@ -35,6 +35,10 @@ class ShiftDatetime
 
     public static function gettimeofday($return_float = false)
     {
+        if ($return_float === true) {
+            return gettimeofday(true) + floatval(self::$offset);
+        }
+
         $ds = gettimeofday();
         $ds['sec'] += self::$offset;
         return $ds;

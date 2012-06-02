@@ -291,6 +291,36 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($test <= 1.0);
     }
 
+    /**
+     * @dataProvider providerTestStatic
+     */
+    public function testGettimeofday($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        $sdate = ShiftDatetime::gettimeofday();
+        $odate = gettimeofday();
+
+        $diff = $sdate['sec'] - $odate['sec'];
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1);
+    }
+
+    /**
+     * @dataProvider providerTestStatic
+     */
+    public function testGettimeofdayWithTrue($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        $sdate = ShiftDatetime::gettimeofday(true);
+        $odate = gettimeofday(true);
+
+        $diff = $sdate - $odate;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1.0);
+    }
+
     public static function mktime($csv)
     {
         return call_user_func_array('mktime', explode(',', $csv));
