@@ -33,14 +33,6 @@ class ShiftDatetime
         return time() + self::$offset;
     }
 
-    public static function date($format, $timestamp = null)
-    {
-        if ($timestamp === null) {
-            $timestamp = self::time();
-        }
-        return date($format, $timestamp);
-    }
-
     public static function getdate($timestamp = null)
     {
         if ($timestamp === null) {
@@ -70,5 +62,21 @@ class ShiftDatetime
             $timestamp = self::time();
         }
         return gmstrftime($format, $timestamp);
+    }
+
+    public static function __callStatic($method, $args)
+    {
+        switch($method) {
+        case 'date':
+        case 'gmdate':
+        case 'gmstrftime':
+            if (isset($args[0]) && !isset($args[1])) {
+                $args[1] = self::time();
+            }
+            return call_user_func_array($method, $args); 
+
+        default:
+            trigger_error("Call to undefined function {$method}()", E_ERROR);
+        }
     }
 }

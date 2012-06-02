@@ -89,6 +89,21 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerTestStatic
      */
+    public function testTime($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        $stime = ShiftDatetime::time();
+        $otime = time();
+
+        $diff = $stime - $otime;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1);
+    }
+
+    /**
+     * @dataProvider providerTestStatic
+     */
     public function testDate($offset)
     {
         ShiftDatetime::offset($offset);
