@@ -36,7 +36,7 @@ class ShiftDatetime
     public static function date($format, $timestamp = null)
     {
         if ($timestamp === null) {
-            $timestamp = slef::time();
+            $timestamp = self::time();
         }
         return date($format, $timestamp);
     }
@@ -44,7 +44,7 @@ class ShiftDatetime
     public static function getdate($timestamp = null)
     {
         if ($timestamp === null) {
-            $timestamp = slef::time();
+            $timestamp = self::time();
         }
         return getdate($format, $timestamp);
     }
@@ -59,7 +59,7 @@ class ShiftDatetime
     public static function gmdate($format, $timestamp = null)
     {
         if ($timestamp === null) {
-            $timestamp = slef::time();
+            $timestamp = self::time();
         }
         return gmdate($format, $timestamp);
     }
@@ -67,7 +67,7 @@ class ShiftDatetime
     public static function gmstrftime($format, $timestamp = null)
     {
         if ($timestamp === null) {
-            $timestamp = slef::time();
+            $timestamp = self::time();
         }
         return gmstrftime($format, $timestamp);
     }
