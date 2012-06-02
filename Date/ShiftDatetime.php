@@ -47,7 +47,7 @@ class ShiftDatetime
         }
 
         list($usec, $sec) = explode(' ', microtime());
-        return $user . ' ' . ($sec + self::$offset);
+        return $usec . ' ' . ($sec + self::$offset);
     }
 
     public static function __callStatic($method, $args)
@@ -70,9 +70,8 @@ class ShiftDatetime
                 $args[1] = self::time();
             }
             return call_user_func_array($method, $args);
-
-        default:
-            trigger_error("Call to undefined method {$method}()", E_ERROR);
         }
+
+        trigger_error("Call to undefined method {$method}()", E_ERROR);
     }
 }

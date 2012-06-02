@@ -261,6 +261,36 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($test <= 1);
     }
 
+    /**
+     * @dataProvider providerTestStatic
+     */
+    public function testMicrotime($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        list($null, $sdate) = explode(' ', ShiftDatetime::microtime());
+        list($null, $odate) = explode(' ', microtime());
+
+        $diff = $sdate - $odate;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1);
+    }
+
+    /**
+     * @dataProvider providerTestStatic
+     */
+    public function testMicrotimeWithTrue($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        $sdate = ShiftDatetime::microtime(true);
+        $odate = microtime(true);
+
+        $diff = $sdate - $odate;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1.0);
+    }
+
     public static function mktime($csv)
     {
         return call_user_func_array('mktime', explode(',', $csv));
