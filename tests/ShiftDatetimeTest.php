@@ -104,24 +104,168 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerTestStatic
      */
-    public function testDate($offset)
+    public function testLocaltime($offset)
     {
         ShiftDatetime::offset($offset);
 
-        $fmt   = 'H,i,s,m,d,Y';
-        $sdate = call_user_func_array(
-            'mktime',
-            explode(',', ShiftDatetime::date($fmt))
-        );
-        $odate = call_user_func_array(
-            'mktime',
-            explode(',', date($fmt))
-        );
+        $stime = ShiftDatetime::localtime();
+        $otime = localtime();
+
+        $sdate = self::mktime(implode(',', array(
+            $stime[2],
+            $stime[1],
+            $stime[0],
+            $stime[4] + 1,
+            $stime[3],
+            $stime[5] + 1900,
+        )));
+
+        $odate = self::mktime(implode(',', array(
+            $otime[2],
+            $otime[1],
+            $otime[0],
+            $otime[4] + 1,
+            $otime[3],
+            $otime[5] + 1900,
+        )));
 
         $diff = $sdate - $odate;
         $test = abs($offset - $diff);
         $this->assertTrue($test <= 1);
     }
+
+    /**
+     * @dataProvider providerTestStatic
+     */
+    public function testGetdate($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        $stime = ShiftDatetime::getdate();
+        $otime = getdate();
+
+        $sdate = $stime[0];
+        $odate = $otime[0];
+
+        $diff = $sdate - $odate;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1);
+    }
+
+    /**
+     * @dataProvider providerTestStatic
+     */
+    public function testDate($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        $fmt   = 'H,i,s,m,d,Y';
+        $sdate = self::mktime(ShiftDatetime::date($fmt));
+        $odate = self::mktime(date($fmt));
+
+        $diff = $sdate - $odate;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1);
+    }
+
+    /**
+     * @dataProvider providerTestStatic
+     */
+    public function testGmdate($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        $fmt   = 'H,i,s,m,d,Y';
+        $sdate = self::mktime(ShiftDatetime::gmdate($fmt));
+        $odate = self::mktime(gmdate($fmt));
+
+        $diff = $sdate - $odate;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1);
+    }
+
+    /**
+     * @dataProvider providerTestStatic
+     */
+    public function testGmstrftime($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        $fmt   = '%H,%M,%S,%m,%d,%Y';
+        $sdate = self::mktime(ShiftDatetime::gmstrftime($fmt));
+        $odate = self::mktime(gmstrftime($fmt));
+
+        $diff = $sdate - $odate;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1);
+    }
+
+    /**
+     * @dataProvider providerTestStatic
+     */
+    public function testStrftime($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        $fmt   = '%H,%M,%S,%m,%d,%Y';
+        $sdate = self::mktime(ShiftDatetime::strftime($fmt));
+        $odate = self::mktime(strftime($fmt));
+
+        $diff = $sdate - $odate;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1);
+    }
+
+
+    /**
+     * @dataProvider providerTestStatic
+     */
+    public function testIdate($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        $sdate = self::mktime(implode(',', array(
+            ShiftDatetime::idate('H'),
+            ShiftDatetime::idate('i'),
+            ShiftDatetime::idate('s'),
+            ShiftDatetime::idate('m'),
+            ShiftDatetime::idate('d'),
+            ShiftDatetime::idate('Y'),
+        )));
+        $odate = self::mktime(implode(',', array(
+            idate('H'),
+            idate('i'),
+            idate('s'),
+            idate('m'),
+            idate('d'),
+            idate('Y'),
+        )));
+
+        $diff = $sdate - $odate;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1);
+    }
+
+    /**
+     * @dataProvider providerTestStatic
+     */
+    public function testStrtotime($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        $sdate = ShiftDatetime::strtotime('now');
+        $odate = strtotime('now');
+
+        $diff = $sdate - $odate;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1);
+    }
+
+    public static function mktime($csv)
+    {
+        return call_user_func_array('mktime', explode(',', $csv));
+    }
+
 
     public function providerTestStatic()
     {

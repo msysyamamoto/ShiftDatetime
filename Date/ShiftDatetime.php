@@ -33,50 +33,46 @@ class ShiftDatetime
         return time() + self::$offset;
     }
 
-    public static function getdate($timestamp = null)
-    {
-        if ($timestamp === null) {
-            $timestamp = self::time();
-        }
-        return getdate($format, $timestamp);
-    }
-
     public static function gettimeofday($return_float = false)
     {
         $ds = gettimeofday();
         $ds['sec'] += self::$offset;
-        return $ds; 
+        return $ds;
     }
 
-    public static function gmdate($format, $timestamp = null)
+    public static function microtime($return_float = false)
     {
-        if ($timestamp === null) {
-            $timestamp = self::time();
+        if ($return_float === true) {
+            return microtime(true) + floatval(self::$offset);
         }
-        return gmdate($format, $timestamp);
-    }
 
-    public static function gmstrftime($format, $timestamp = null)
-    {
-        if ($timestamp === null) {
-            $timestamp = self::time();
-        }
-        return gmstrftime($format, $timestamp);
+        list($usec, $sec) = explode(' ', microtime());
+        return $user . ' ' . ($sec + self::$offset);
     }
 
     public static function __callStatic($method, $args)
     {
         switch($method) {
+        case 'getdate':
+        case 'localtime':
+            if (!isset($args[0])) {
+                $args[0] = self::time();
+            }
+            return call_user_func_array($method, $args);
+
         case 'date':
         case 'gmdate':
         case 'gmstrftime':
+        case 'idate':
+        case 'strftime':
+        case 'strtotime':
             if (isset($args[0]) && !isset($args[1])) {
                 $args[1] = self::time();
             }
-            return call_user_func_array($method, $args); 
+            return call_user_func_array($method, $args);
 
         default:
-            trigger_error("Call to undefined function {$method}()", E_ERROR);
+            trigger_error("Call to undefined method {$method}()", E_ERROR);
         }
     }
 }
