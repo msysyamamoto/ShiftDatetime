@@ -1,13 +1,24 @@
 <?php
 class ShiftDatetime
 {
+    /**
+     * @var Int
+     */
     protected static $offset = 0;
 
+    /**
+     * @param $offset Int
+     */
     public static function offset($offset)
     {
         self::$offset = intval($offset);
     }
 
+    /**
+     * @param $time String
+     * @param $timezone DateTimeZone
+     * @return Datetime
+     */
     public static function create($time = null, DateTimeZone $timezone = null)
     {
         if ($time === null) {
@@ -28,11 +39,18 @@ class ShiftDatetime
         return new Datetime($time, $timezone);
     }
 
+    /**
+     * @return Int
+     */
     public static function time()
     {
         return time() + self::$offset;
     }
 
+    /**
+     * @param $return_float Bool
+     * @return Array
+     */
     public static function gettimeofday($return_float = false)
     {
         if ($return_float === true) {
@@ -44,6 +62,10 @@ class ShiftDatetime
         return $ds;
     }
 
+    /**
+     * @param $return_float Bool
+     * @return mixed 
+     */
     public static function microtime($return_float = false)
     {
         if ($return_float === true) {
@@ -54,9 +76,53 @@ class ShiftDatetime
         return $usec . ' ' . ($sec + self::$offset);
     }
 
+    /**
+     * @param $hour Int
+     * @param $min Int
+     * @param $sec Int
+     * @param $mon Int
+     * @param $day Int
+     * @param $year Int
+     * @return Int 
+     */
+    public static function mktime(
+        $hour, $min = null, $sec = null,
+        $mon = null, $day = null, $year = null
+    )
+    {
+        list($y, $m, $d, $h, $i, $s) = explode(',', self::date('Y,m,d,H,i,s'));
+        if ($min === null) {
+            $min  = $i;
+            $sec  = $s;
+            $mon  = $m;
+            $day  = $d;
+            $year = $y;
+        } elseif ($sec === null) {
+            $sec  = $s;
+            $mon  = $m;
+            $day  = $d;
+            $year = $y;
+        } elseif ($mon === null) {
+            $mon  = $m;
+            $day  = $d;
+            $year = $y;
+        } elseif ($day === null) {
+            $day  = $d;
+            $year = $y;
+        } elseif ($year === null) {
+            $year = $y;
+        }
+        return mktime($hour, $min, $sec, $mon, $day, $year);
+    }
+
+    /**
+     * @param $method String
+     * @param $args Array
+     * @return mixed 
+     */
     public static function __callStatic($method, $args)
     {
-        switch($method) {
+        switch ($method) {
         case 'getdate':
         case 'localtime':
             if (!isset($args[0])) {

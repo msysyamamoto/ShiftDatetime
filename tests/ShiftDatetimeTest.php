@@ -216,7 +216,6 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($test <= 1);
     }
 
-
     /**
      * @dataProvider providerTestStatic
      */
@@ -319,6 +318,21 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
         $diff = $sdate - $odate;
         $test = abs($offset - $diff);
         $this->assertTrue($test <= 1.0);
+    }
+
+    /**
+     * @dataProvider providerTestStatic
+     */
+    public function testMktime($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        $sdate = ShiftDatetime::mktime(0);
+        $odate = mktime(0);
+
+        $diff = $sdate - $odate;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1);
     }
 
     public static function mktime($csv)
