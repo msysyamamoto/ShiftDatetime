@@ -1,6 +1,6 @@
 <?php
 /**
- * Date/ShiftDatetime
+ * ShiftDatetime.php
  *
  * PHP version 5.3 or later
  *
@@ -13,7 +13,7 @@
  */
 
 /**
- * Date/ShiftDatetime
+ * Date_ShiftDatetime
  *
  * @category Date
  * @package  Date_ShiftDate
@@ -21,7 +21,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php MIT
  * @link
  */
-class ShiftDatetime
+class Date_ShiftDatetime
 {
     /**
      * @var Int

@@ -1,0 +1,24 @@
+Date/ShiftDatetime 
+------------------
+Create a Datetime instance of time shifted from the current time in seconds that you set.
+
+# Example
+
+<?php
+require_once 'Date/ShiftDatetime.php';
+
+Date_ShiftDatetime::offset(3600 * 24);
+
+$date1 = Date_ShiftDatetime::create();
+
+$date2 = new Datetime();
+
+$interval = $date1->diff($date2);
+
+echo $interval->format('%R%a days'), PHP_EOL; // => "-1 days"
+?>
+
+
+# Copyright
+
+Copyright (c) 2012 ymmtmsys. See LICENSE for further details.

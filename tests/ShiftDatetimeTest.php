@@ -2,11 +2,11 @@
 require_once realpath(dirname(__FILE__) . '/../Date/ShiftDatetime.php');
 require_once 'PHPUnit/Autoload.php';
 
-class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
+class Date_ShiftDatetimeTest extends PHPUnit_Framework_TestCase
 {
     public function tearDown()
     {
-        ShiftDatetime::offset(0);
+        Date_ShiftDatetime::offset(0);
     }
 
     public static function mktime($csv)
@@ -19,8 +19,8 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testOffset($offset)
     {
-        ShiftDatetime::offset($offset);
-        $shiftdate = ShiftDatetime::create();
+        Date_ShiftDatetime::offset($offset);
+        $shiftdate = Date_ShiftDatetime::create();
         $date = new Datetime();
 
         $diff     = $shiftdate->getTimestamp() - $date->getTimestamp();
@@ -50,8 +50,8 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testFormat($format)
     {
-        ShiftDatetime::offset(123456789);
-        $shiftdate = ShiftDatetime::create($format);
+        Date_ShiftDatetime::offset(123456789);
+        $shiftdate = Date_ShiftDatetime::create($format);
         $date = new Datetime($format);
 
         $diff = $shiftdate->getTimestamp() - $date->getTimestamp();
@@ -73,8 +73,8 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testTimezone($format, $timezone)
     {
-        ShiftDatetime::offset(123456789);
-        $shiftdate = ShiftDatetime::create($format, $timezone);
+        Date_ShiftDatetime::offset(123456789);
+        $shiftdate = Date_ShiftDatetime::create($format, $timezone);
         $date = new Datetime($format, $timezone);
 
         $diff = $shiftdate->getTimestamp() - $date->getTimestamp();
@@ -96,9 +96,9 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testTime($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
-        $stime = ShiftDatetime::time();
+        $stime = Date_ShiftDatetime::time();
         $otime = time();
 
         $diff = $stime - $otime;
@@ -111,9 +111,9 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testLocaltime($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
-        $stime = ShiftDatetime::localtime();
+        $stime = Date_ShiftDatetime::localtime();
         $otime = localtime();
 
         $sdate = self::mktime(implode(',', array(
@@ -144,9 +144,9 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testGetdate($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
-        $stime = ShiftDatetime::getdate();
+        $stime = Date_ShiftDatetime::getdate();
         $otime = getdate();
 
         $sdate = $stime[0];
@@ -162,10 +162,10 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testDate($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
         $fmt   = 'H,i,s,m,d,Y';
-        $sdate = self::mktime(ShiftDatetime::date($fmt));
+        $sdate = self::mktime(Date_ShiftDatetime::date($fmt));
         $odate = self::mktime(date($fmt));
 
         $diff = $sdate - $odate;
@@ -178,10 +178,10 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testGmdate($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
         $fmt   = 'H,i,s,m,d,Y';
-        $sdate = self::mktime(ShiftDatetime::gmdate($fmt));
+        $sdate = self::mktime(Date_ShiftDatetime::gmdate($fmt));
         $odate = self::mktime(gmdate($fmt));
 
         $diff = $sdate - $odate;
@@ -194,10 +194,10 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testGmstrftime($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
         $fmt   = '%H,%M,%S,%m,%d,%Y';
-        $sdate = self::mktime(ShiftDatetime::gmstrftime($fmt));
+        $sdate = self::mktime(Date_ShiftDatetime::gmstrftime($fmt));
         $odate = self::mktime(gmstrftime($fmt));
 
         $diff = $sdate - $odate;
@@ -210,10 +210,10 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testStrftime($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
         $fmt   = '%H,%M,%S,%m,%d,%Y';
-        $sdate = self::mktime(ShiftDatetime::strftime($fmt));
+        $sdate = self::mktime(Date_ShiftDatetime::strftime($fmt));
         $odate = self::mktime(strftime($fmt));
 
         $diff = $sdate - $odate;
@@ -226,15 +226,15 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testIdate($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
         $sdate = self::mktime(implode(',', array(
-            ShiftDatetime::idate('H'),
-            ShiftDatetime::idate('i'),
-            ShiftDatetime::idate('s'),
-            ShiftDatetime::idate('m'),
-            ShiftDatetime::idate('d'),
-            ShiftDatetime::idate('Y'),
+            Date_ShiftDatetime::idate('H'),
+            Date_ShiftDatetime::idate('i'),
+            Date_ShiftDatetime::idate('s'),
+            Date_ShiftDatetime::idate('m'),
+            Date_ShiftDatetime::idate('d'),
+            Date_ShiftDatetime::idate('Y'),
         )));
         $odate = self::mktime(implode(',', array(
             idate('H'),
@@ -255,9 +255,9 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testStrtotime($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
-        $sdate = ShiftDatetime::strtotime('now');
+        $sdate = Date_ShiftDatetime::strtotime('now');
         $odate = strtotime('now');
 
         $diff = $sdate - $odate;
@@ -270,9 +270,9 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testMicrotime($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
-        list($null, $sdate) = explode(' ', ShiftDatetime::microtime());
+        list($null, $sdate) = explode(' ', Date_ShiftDatetime::microtime());
         list($null, $odate) = explode(' ', microtime());
 
         $diff = $sdate - $odate;
@@ -285,9 +285,9 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testMicrotimeWithTrue($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
-        $sdate = ShiftDatetime::microtime(true);
+        $sdate = Date_ShiftDatetime::microtime(true);
         $odate = microtime(true);
 
         $diff = $sdate - $odate;
@@ -300,9 +300,9 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testGettimeofday($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
-        $sdate = ShiftDatetime::gettimeofday();
+        $sdate = Date_ShiftDatetime::gettimeofday();
         $odate = gettimeofday();
 
         $diff = $sdate['sec'] - $odate['sec'];
@@ -315,9 +315,9 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testGettimeofdayWithTrue($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
-        $sdate = ShiftDatetime::gettimeofday(true);
+        $sdate = Date_ShiftDatetime::gettimeofday(true);
         $odate = gettimeofday(true);
 
         $diff = $sdate - $odate;
@@ -339,9 +339,9 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
      */
     public function testMktime($offset)
     {
-        ShiftDatetime::offset($offset);
+        Date_ShiftDatetime::offset($offset);
 
-        $sdate = ShiftDatetime::mktime(0, 0, 0);
+        $sdate = Date_ShiftDatetime::mktime(0, 0, 0);
         $odate = mktime(0, 0, 0);
 
         $diff = $sdate - $odate;
