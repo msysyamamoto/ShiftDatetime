@@ -1,4 +1,26 @@
 <?php
+/**
+ * Date/ShiftDatetime
+ *
+ * PHP version 5.3 or later
+ *
+ * @category  Date
+ * @package   Date_ShiftDate
+ * @author    ymmtmsts
+ * @copyright Copyright (c) <2012> <ymmtmsys>
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link
+ */
+
+/**
+ * Date/ShiftDatetime
+ *
+ * @category Date
+ * @package  Date_ShiftDate
+ * @author   ymmtmsts
+ * @license  http://www.opensource.org/licenses/mit-license.php MIT
+ * @link
+ */
 class ShiftDatetime
 {
     /**
@@ -7,7 +29,11 @@ class ShiftDatetime
     protected static $offset = 0;
 
     /**
-     * @param $offset Int
+     * Set an offset from the time now by seconds.
+     *
+     * @param Int $offset offset form the time now
+     *
+     * @return null
      */
     public static function offset($offset)
     {
@@ -15,8 +41,11 @@ class ShiftDatetime
     }
 
     /**
-     * @param $time String
-     * @param $timezone DateTimeZone
+     * Create the Datetime instance that shifted the time.
+     *
+     * @param String       $time     A date/time string
+     * @param DateTimeZone $timezone A DateTimeZone object
+     *
      * @return Datetime
      */
     public static function create($time = null, DateTimeZone $timezone = null)
@@ -40,6 +69,8 @@ class ShiftDatetime
     }
 
     /**
+     * rapper of time()
+     *
      * @return Int
      */
     public static function time()
@@ -48,7 +79,11 @@ class ShiftDatetime
     }
 
     /**
-     * @param $return_float Bool
+     * rapper of gettimeofday()
+     *
+     * @param Bool $return_float When set to TRUE,
+     *                           a float instead of an array is returned.
+     *
      * @return Array
      */
     public static function gettimeofday($return_float = false)
@@ -63,8 +98,12 @@ class ShiftDatetime
     }
 
     /**
-     * @param $return_float Bool
-     * @return mixed 
+     * rapper of microtime()
+     *
+     * @param Bool $return_float When set to TRUE,
+     *                           a float instead of an array is returned.
+     *
+     * @return mixed
      */
     public static function microtime($return_float = false)
     {
@@ -77,22 +116,26 @@ class ShiftDatetime
     }
 
     /**
-     * @param $hour Int
-     * @param $min Int
-     * @param $sec Int
-     * @param $mon Int
-     * @param $day Int
-     * @param $year Int
-     * @return Int 
+     * rapper of mktime()
+     *
+     * @param Int $hour hour
+     * @param Int $min  minute
+     * @param Int $sec  second
+     * @param Int $mon  month
+     * @param Int $day  day
+     * @param Int $year year
+     *
+     * @return Int
      */
     public static function mktime(
         $hour, $min = null, $sec = null,
         $mon = null, $day = null, $year = null
-    )
-    {
+    ) {
+
         list($y, $m, $d, $h, $i, $s) = array_map(
-            'intval', explode(',', self::date('Y,m,d,H,i,s')
-        ));
+            'intval', explode(',', self::date('Y,m,d,H,i,s'))
+        );
+
         if ($min === null) {
             $min  = $i;
             $sec  = $s;
@@ -118,9 +161,13 @@ class ShiftDatetime
     }
 
     /**
-     * @param $method String
-     * @param $args Array
-     * @return mixed 
+     * Triggered when invoking inaccessible methods in a static context.
+     *
+     * @param String $method Name of the method being called
+     * @param Array  $args   An enumerated array containing the parameters
+     *                       passed to the $name'ed method.
+     *
+     * @return mixed
      */
     public static function __callStatic($method, $args)
     {
