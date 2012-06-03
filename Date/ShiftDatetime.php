@@ -90,7 +90,9 @@ class ShiftDatetime
         $mon = null, $day = null, $year = null
     )
     {
-        list($y, $m, $d, $h, $i, $s) = explode(',', self::date('Y,m,d,H,i,s'));
+        list($y, $m, $d, $h, $i, $s) = array_map(
+            'intval', explode(',', self::date('Y,m,d,H,i,s')
+        ));
         if ($min === null) {
             $min  = $i;
             $sec  = $s;

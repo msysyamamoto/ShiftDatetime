@@ -9,6 +9,11 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
         ShiftDatetime::offset(0);
     }
 
+    public static function mktime($csv)
+    {
+        return call_user_func_array('mktime', explode(',', $csv));
+    }
+
     /**
      * @dataProvider providerTestOffset
      */
@@ -320,33 +325,40 @@ class ShiftDatetimeTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($test <= 1.0);
     }
 
-    /**
-     * @dataProvider providerTestStatic
-     */
-    public function testMktime($offset)
-    {
-        ShiftDatetime::offset($offset);
-
-        $sdate = ShiftDatetime::mktime(0);
-        $odate = mktime(0);
-
-        $diff = $sdate - $odate;
-        $test = abs($offset - $diff);
-        $this->assertTrue($test <= 1);
-    }
-
-    public static function mktime($csv)
-    {
-        return call_user_func_array('mktime', explode(',', $csv));
-    }
-
-
     public function providerTestStatic()
     {
         return array(
             array(0),
             array(123456789),
             array(-987654321),
+        );
+    }
+
+    /**
+     * @dataProvider providerTestMktime
+     */
+    public function testMktime($offset)
+    {
+        ShiftDatetime::offset($offset);
+
+        $sdate = ShiftDatetime::mktime(0, 0, 0);
+        $odate = mktime(0, 0, 0);
+
+        $diff = $sdate - $odate;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1);
+    }
+
+    public function providerTestMktime()
+    {
+        $day = 60 * 60 * 24;
+
+        return array(
+            array(0),
+            array($day),
+            array(-1 * $day),
+            array(100 * $day),
+            array(-123 * $day),
         );
     }
 }
