@@ -2,6 +2,10 @@ Date/ShiftDatetime
 ------------------
 Create a Datetime instance of time shifted from the current time in seconds that you set.
 
+# Install
+
+$ sudo pear install https://oreore-pear.herokuapp.com/Date_ShiftDatetime-0.1.0.tgz
+
 # Example
 
 <?php
