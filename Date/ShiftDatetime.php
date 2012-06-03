@@ -6,7 +6,7 @@
  *
  * @category  Date
  * @package   Date_ShiftDate
- * @author    ymmtmsts
+ * @author    ymmtmsys
  * @copyright Copyright (c) <2012> <ymmtmsys>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link
@@ -17,7 +17,7 @@
  *
  * @category Date
  * @package  Date_ShiftDate
- * @author   ymmtmsts
+ * @author   ymmtmsys
  * @license  http://www.opensource.org/licenses/mit-license.php MIT
  * @link
  */
