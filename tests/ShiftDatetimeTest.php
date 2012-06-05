@@ -375,6 +375,7 @@ class Date_ShiftDatetimeTest extends PHPUnit_Framework_TestCase
             array(-1 * $day),
             array(100 * $day),
             array(-123 * $day),
+            array(1234 * $day),
         );
     }
 }

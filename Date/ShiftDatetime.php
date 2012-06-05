@@ -7,7 +7,7 @@
  * @category  Date
  * @package   Date_ShiftDate
  * @author    ymmtmsys
- * @copyright Copyright (c) <2012> <ymmtmsys>
+ * @copyright Copyright (c) 2012 ymmtmsys
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/ymmtmsys/ShiftDatetime
  */
@@ -132,31 +132,26 @@ class Date_ShiftDatetime
         $mon = null, $day = null, $year = null
     ) {
 
-        list($y, $m, $d, $h, $i, $s) = array_map(
-            'intval', explode(',', self::date('Y,m,d,H,i,s'))
+        $times = array_map(
+            'intval', explode(',', self::date('i,s,m,d,Y'))
         );
 
         if ($min === null) {
-            $min  = $i;
-            $sec  = $s;
-            $mon  = $m;
-            $day  = $d;
-            $year = $y;
+            list($min, $sec, $mon, $day, $year) = $times;
         } elseif ($sec === null) {
-            $sec  = $s;
-            $mon  = $m;
-            $day  = $d;
-            $year = $y;
+            self::arrayShifts(1, $times);
+            list($sec, $mon, $day, $year) = $times;
         } elseif ($mon === null) {
-            $mon  = $m;
-            $day  = $d;
-            $year = $y;
+            self::arrayShifts(2, $times);
+            list($mon, $day, $year) = $times;
         } elseif ($day === null) {
-            $day  = $d;
-            $year = $y;
+            self::arrayShifts(3, $times);
+            list($day, $year) = $times;
         } elseif ($year === null) {
-            $year = $y;
+            self::arrayShifts(4, $times);
+            list($year) = $times;
         }
+
         return mktime($hour, $min, $sec, $mon, $day, $year);
     }
 
@@ -177,39 +172,49 @@ class Date_ShiftDatetime
         $mon = null, $day = null, $year = null
     ) {
 
-        list($y, $m, $d, $h, $i, $s) = array_map(
-            'intval', explode(',', self::gmdate('Y,m,d,H,i,s'))
+        $times = array_map(
+            'intval', explode(',', self::gmdate('H,i,s,m,d,Y'))
         );
 
         if ($hour === null) {
-            $hour = $h;
-            $min  = $i;
-            $sec  = $s;
-            $mon  = $m;
-            $day  = $d;
-            $year = $y;
+            list($hour, $min, $sec, $mon, $day, $year) = $times;
         } elseif ($min === null) {
-            $min  = $i;
-            $sec  = $s;
-            $mon  = $m;
-            $day  = $d;
-            $year = $y;
+            self::arrayShifts(1, $times);
+            list($min, $sec, $mon, $day, $year) = $times;
         } elseif ($sec === null) {
-            $sec  = $s;
-            $mon  = $m;
-            $day  = $d;
-            $year = $y;
+            self::arrayShifts(2, $times);
+            list($sec, $mon, $day, $year) = $times;
         } elseif ($mon === null) {
-            $mon  = $m;
-            $day  = $d;
-            $year = $y;
+            self::arrayShifts(3, $times);
+            list($mon, $day, $year) = $times;
         } elseif ($day === null) {
-            $day  = $d;
-            $year = $y;
+            self::arrayShifts(4, $times);
+            list($day, $year) = $times;
         } elseif ($year === null) {
-            $year = $y;
+            self::arrayShifts(5, $times);
+            list($year) = $times;
         }
+
         return gmmktime($hour, $min, $sec, $mon, $day, $year);
+    }
+
+    /**
+     * Shift elements off the beginning of array
+     *
+     * @param Int   $n      number of shifts
+     * @param Array &$array input array
+     *
+     * @return Array
+     */
+    protected static function arrayShifts($n, &$array)
+    {
+        $res = array();
+
+        for ($i = 0; $i < $n; $i++) {
+            $res[] = array_shift($array);
+        }
+
+        return $res;
     }
 
     /**
