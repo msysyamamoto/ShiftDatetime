@@ -349,6 +349,22 @@ class Date_ShiftDatetimeTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($test <= 1);
     }
 
+    /**
+     * @dataProvider providerTestMktime
+     */
+    public function testGmmktime($offset)
+    {
+        Date_ShiftDatetime::offset($offset);
+
+        $sdate = Date_ShiftDatetime::gmmktime(0, 0, 0);
+        $odate = gmmktime(0, 0, 0);
+
+        $diff = $sdate - $odate;
+        $test = abs($offset - $diff);
+        $this->assertTrue($test <= 1);
+    }
+
+
     public function providerTestMktime()
     {
         $day = 60 * 60 * 24;

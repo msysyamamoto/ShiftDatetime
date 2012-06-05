@@ -161,6 +161,58 @@ class Date_ShiftDatetime
     }
 
     /**
+     * rapper of gmmktime()
+     *
+     * @param Int $hour hour
+     * @param Int $min  minute
+     * @param Int $sec  second
+     * @param Int $mon  month
+     * @param Int $day  day
+     * @param Int $year year
+     *
+     * @return Int
+     */
+    public static function gmmktime(
+        $hour = null, $min = null, $sec = null,
+        $mon = null, $day = null, $year = null
+    ) {
+
+        list($y, $m, $d, $h, $i, $s) = array_map(
+            'intval', explode(',', self::gmdate('Y,m,d,H,i,s'))
+        );
+
+        if ($hour === null) {
+            $hour = $h;
+            $min  = $i;
+            $sec  = $s;
+            $mon  = $m;
+            $day  = $d;
+            $year = $y;
+        } elseif ($min === null) {
+            $min  = $i;
+            $sec  = $s;
+            $mon  = $m;
+            $day  = $d;
+            $year = $y;
+        } elseif ($sec === null) {
+            $sec  = $s;
+            $mon  = $m;
+            $day  = $d;
+            $year = $y;
+        } elseif ($mon === null) {
+            $mon  = $m;
+            $day  = $d;
+            $year = $y;
+        } elseif ($day === null) {
+            $day  = $d;
+            $year = $y;
+        } elseif ($year === null) {
+            $year = $y;
+        }
+        return gmmktime($hour, $min, $sec, $mon, $day, $year);
+    }
+
+    /**
      * Triggered when invoking inaccessible methods in a static context.
      *
      * @param String $method Name of the method being called
