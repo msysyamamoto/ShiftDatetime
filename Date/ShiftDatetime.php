@@ -9,7 +9,7 @@
  * @author    ymmtmsys
  * @copyright Copyright (c) <2012> <ymmtmsys>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
- * @link
+ * @link      https://github.com/ymmtmsys/ShiftDatetime
  */
 
 /**
@@ -19,7 +19,7 @@
  * @package  Date_ShiftDate
  * @author   ymmtmsys
  * @license  http://www.opensource.org/licenses/mit-license.php MIT
- * @link
+ * @link     https://github.com/ymmtmsys/ShiftDatetime
  */
 class Date_ShiftDatetime
 {
